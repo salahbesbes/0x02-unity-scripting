@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,23 +11,28 @@ public class PlayerController : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		
+
 		switch (other.tag)
 		{
 			case "Pickup":
 				score++;
 				Debug.Log($"Score: {score}");
 				Destroy(other.gameObject); // destroy
-				// other.gameObject.SetActive(false); // deActivate
+							   // other.gameObject.SetActive(false); // desActivate
 				break;
 			case "Trap":
 				health--;
 				Debug.Log($"Health: {health}");
 				break;
+			case "Goal":
+				Debug.Log("You win!");
+				break;
 			default:
 				return;
 		}
 	}
+
+
 
 	void FixedUpdate()
 	{
@@ -39,6 +45,18 @@ public class PlayerController : MonoBehaviour
 
 		rb.AddForce(force);
 
-		
+
+	}
+
+	void Update()
+	{
+		if (health == 0)
+		{
+			Debug.Log("Game Over!");
+			health = 5;
+			score = 0;
+			Scene scene = SceneManager.GetActiveScene();
+			SceneManager.LoadScene(scene.name);
+		}
 	}
 }
