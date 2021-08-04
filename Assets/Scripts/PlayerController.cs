@@ -4,6 +4,22 @@ public class PlayerController : MonoBehaviour
 {
 	public float speed = 50f;
 	public Rigidbody rb;
+	private int score = 0;
+
+
+
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "Pickup")
+		{
+			score++;
+			Debug.Log($"Score: {score}");
+			Destroy(other.gameObject); // destroy
+			// other.gameObject.SetActive(false); // deActivate
+
+			
+		}
+	}
 
 	void FixedUpdate()
 	{
@@ -15,6 +31,7 @@ public class PlayerController : MonoBehaviour
 		Vector3 force = dir * speed * Time.deltaTime;
 
 		rb.AddForce(force);
+
 		
 	}
 }
