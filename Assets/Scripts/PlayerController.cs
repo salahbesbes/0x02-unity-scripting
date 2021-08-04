@@ -5,19 +5,26 @@ public class PlayerController : MonoBehaviour
 	public float speed = 50f;
 	public Rigidbody rb;
 	private int score = 0;
-
+	public int health = 5;
 
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.tag == "Pickup")
+		
+		switch (other.tag)
 		{
-			score++;
-			Debug.Log($"Score: {score}");
-			Destroy(other.gameObject); // destroy
-			// other.gameObject.SetActive(false); // deActivate
-
-			
+			case "Pickup":
+				score++;
+				Debug.Log($"Score: {score}");
+				Destroy(other.gameObject); // destroy
+				// other.gameObject.SetActive(false); // deActivate
+				break;
+			case "Trap":
+				health--;
+				Debug.Log($"Health: {health}");
+				break;
+			default:
+				return;
 		}
 	}
 
